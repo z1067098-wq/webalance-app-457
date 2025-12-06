@@ -1,0 +1,287 @@
+{
+  "id": "102019aed5ecd607d5a9c47682205ad3c76",
+  "version": "102019aed5ecd607c3cbfc03db1673f22cf",
+  "schema": {
+    "name": "transaction",
+    "description": "Records financial transactions (income or expenses) associated with a user or a couple.",
+    "fields": [
+      {
+        "name": "id",
+        "description": "Unique identifier for the transaction.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Internal identifier."
+        }
+      },
+      {
+        "name": "data_creator",
+        "description": "id of the user who creates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        }
+      },
+      {
+        "name": "data_updater",
+        "description": "id of the user who updates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        }
+      },
+      {
+        "name": "create_time",
+        "description": "create time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "update_time",
+        "description": "update time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "amount",
+        "description": "Monetary value of the transaction.",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "Financial data."
+        },
+        "taxonomy": {
+          "category": "Financial",
+          "subject": "Transaction"
+        }
+      },
+      {
+        "name": "currency",
+        "description": "ISO currency code for the transaction amount.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Financial context."
+        }
+      },
+      {
+        "name": "category",
+        "description": "Category of the transaction (e.g., Groceries, Rent).",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Spending habit information."
+        }
+      },
+      {
+        "name": "description",
+        "description": "Optional details or notes about the transaction.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "User generated content potentially containing sensitive info."
+        },
+        "nullable": true
+      },
+      {
+        "name": "transaction_date",
+        "description": "The actual date when the transaction occurred.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Financial history."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "type",
+        "description": "Indicates if the transaction is income or an expense.",
+        "type": 100,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Financial classification."
+        },
+        "enumeration": [
+          {
+            "value": "Unspecified"
+          },
+          {
+            "number": 1,
+            "value": "Income"
+          },
+          {
+            "number": 2,
+            "value": "Expense"
+          }
+        ]
+      },
+      {
+        "name": "couple_id",
+        "description": "Optional reference to a couple if this is a shared transaction.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Association to shared budget."
+        },
+        "nullable": true
+      },
+      {
+        "name": "paid_by",
+        "description": "User ID of the person who paid for this transaction.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Payment responsibility."
+        }
+      },
+      {
+        "name": "split_mode",
+        "description": "How the transaction cost is split between partners.",
+        "type": 100,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Expense splitting arrangement."
+        },
+        "enumeration": [
+          {
+            "value": "Unspecified"
+          },
+          {
+            "number": 1,
+            "value": "FiftyFifty"
+          },
+          {
+            "number": 2,
+            "value": "IncomeBased"
+          },
+          {
+            "number": 3,
+            "value": "Custom"
+          },
+          {
+            "number": 4,
+            "value": "OnePerson"
+          }
+        ]
+      },
+      {
+        "name": "custom_split_percentage",
+        "description": "Custom split percentage when split_mode is Custom (0.0-1.0).",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Custom financial arrangement."
+        },
+        "numeric": "float",
+        "nullable": true
+      },
+      {
+        "name": "is_private",
+        "description": "Whether this transaction is private to the user who created it.",
+        "type": 3,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Privacy flag."
+        }
+      }
+    ],
+    "indexes": [
+      {
+        "fields": [
+          "id"
+        ],
+        "unique": true,
+        "primary": true,
+        "order": false
+      },
+      {
+        "fields": [
+          "couple_id"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "transaction_date"
+        ],
+        "order": true
+      },
+      {
+        "fields": [
+          "data_creator"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_updater"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "paid_by"
+        ],
+        "order": false
+      }
+    ],
+    "relations": [
+      {
+        "referencing_fields": [
+          "couple_id"
+        ],
+        "referenced_entity": {
+          "name": "couple"
+        },
+        "referenced_fields": [
+          "id"
+        ]
+      },
+      {
+        "referencing_fields": [
+          "paid_by"
+        ],
+        "referenced_entity": {
+          "name": "user"
+        },
+        "referenced_fields": [
+          "id"
+        ]
+      },
+      {
+        "referencing_fields": [
+          "data_creator"
+        ],
+        "referenced_entity": {
+          "name": "user"
+        },
+        "referenced_fields": [
+          "id"
+        ]
+      }
+    ]
+  },
+  "task": {
+    "id": "69328003c70740a92a92684f",
+    "root": "69328003c70740a92a92684f",
+    "project": "69328003c70740a92a92684e",
+    "user": "687183e0-c051-7000-5ebd-0c2a0e77084e"
+  },
+  "namespace": {
+    "id": "01987547fc6c72ecb453bd2736bd4ea0",
+    "tenant": 2,
+    "name": "global-1",
+    "default": true
+  },
+  "revision": 1
+}

@@ -1,0 +1,171 @@
+{
+  "id": "102019aed583b78717aac869234cd701666",
+  "version": "102019aed5ecd607c3cbfc03db1673f22cf",
+  "schema": {
+    "name": "goal",
+    "description": "Represents a financial goal shared by a couple or created by a user.",
+    "fields": [
+      {
+        "name": "id",
+        "description": "Unique identifier for the goal.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Internal identifier."
+        }
+      },
+      {
+        "name": "data_creator",
+        "description": "id of the user who creates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        }
+      },
+      {
+        "name": "data_updater",
+        "description": "id of the user who updates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        }
+      },
+      {
+        "name": "create_time",
+        "description": "create time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "update_time",
+        "description": "update time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "couple_id",
+        "description": "Reference to the couple that owns this goal.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Association identifier."
+        }
+      },
+      {
+        "name": "name",
+        "description": "Name or title of the goal.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "User content."
+        }
+      },
+      {
+        "name": "target_amount",
+        "description": "The target monetary amount for the goal.",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "Financial target data."
+        },
+        "taxonomy": {
+          "category": "Financial",
+          "subject": "Goal"
+        },
+        "numeric": "float"
+      },
+      {
+        "name": "deadline_date",
+        "description": "The expected completion date for the goal.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Planning data."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "completion_date",
+        "description": "The actual date when the goal was completed.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "History data."
+        },
+        "nullable": true,
+        "format": "timestamp"
+      }
+    ],
+    "indexes": [
+      {
+        "fields": [
+          "id"
+        ],
+        "unique": true,
+        "primary": true,
+        "order": false
+      },
+      {
+        "fields": [
+          "couple_id"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "deadline_date"
+        ],
+        "order": true
+      },
+      {
+        "fields": [
+          "data_creator"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_updater"
+        ],
+        "order": false
+      }
+    ],
+    "relations": [
+      {
+        "referencing_fields": [
+          "couple_id"
+        ],
+        "referenced_entity": {
+          "name": "couple"
+        },
+        "referenced_fields": [
+          "id"
+        ],
+        "cascade": true
+      }
+    ]
+  },
+  "task": {
+    "id": "69328003c70740a92a92684f",
+    "root": "69328003c70740a92a92684f",
+    "project": "69328003c70740a92a92684e",
+    "user": "687183e0-c051-7000-5ebd-0c2a0e77084e"
+  },
+  "namespace": {
+    "id": "01987547fc6c72ecb453bd2736bd4ea0",
+    "tenant": 2,
+    "name": "global-1",
+    "default": true
+  },
+  "revision": 1
+}

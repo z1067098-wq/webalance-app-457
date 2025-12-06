@@ -1,0 +1,186 @@
+{
+  "id": "102019aed5ecd607e269f27021d64a44ac5",
+  "version": "102019aed5ecd607c3cbfc03db1673f22cf",
+  "schema": {
+    "name": "user_subscription",
+    "description": "Stores subscription details for users, tracking their plan tier and active status.",
+    "fields": [
+      {
+        "name": "id",
+        "description": "Unique identifier for the subscription record.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Internal identifier."
+        }
+      },
+      {
+        "name": "data_creator",
+        "description": "id of the user who creates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        }
+      },
+      {
+        "name": "data_updater",
+        "description": "id of the user who updates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        }
+      },
+      {
+        "name": "create_time",
+        "description": "create time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "update_time",
+        "description": "update time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "user_id",
+        "description": "Reference to the user who holds this subscription.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Links subscription to a specific user."
+        }
+      },
+      {
+        "name": "tier",
+        "description": "The tier level of the subscription.",
+        "type": 100,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Service level information."
+        },
+        "enumeration": [
+          {
+            "value": "Unspecified"
+          },
+          {
+            "number": 1,
+            "value": "Free"
+          },
+          {
+            "number": 2,
+            "value": "Premium"
+          }
+        ]
+      },
+      {
+        "name": "started_date",
+        "description": "The date when the subscription started.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Subscription management."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "expires_date",
+        "description": "The date when the subscription expires, if applicable.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Subscription management."
+        },
+        "nullable": true,
+        "format": "timestamp"
+      },
+      {
+        "name": "is_active",
+        "description": "Indicates whether the subscription is currently active.",
+        "type": 3,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Service access control."
+        }
+      }
+    ],
+    "indexes": [
+      {
+        "fields": [
+          "id"
+        ],
+        "unique": true,
+        "primary": true,
+        "order": false
+      },
+      {
+        "fields": [
+          "user_id"
+        ],
+        "unique": true,
+        "order": false
+      },
+      {
+        "fields": [
+          "tier"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "is_active"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_creator"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_updater"
+        ],
+        "order": false
+      }
+    ],
+    "relations": [
+      {
+        "referencing_fields": [
+          "user_id"
+        ],
+        "referenced_entity": {
+          "name": "user"
+        },
+        "referenced_fields": [
+          "id"
+        ],
+        "cascade": true
+      }
+    ]
+  },
+  "task": {
+    "id": "69328003c70740a92a92684f",
+    "root": "69328003c70740a92a92684f",
+    "project": "69328003c70740a92a92684e",
+    "user": "687183e0-c051-7000-5ebd-0c2a0e77084e"
+  },
+  "namespace": {
+    "id": "01987547fc6c72ecb453bd2736bd4ea0",
+    "tenant": 2,
+    "name": "global-1",
+    "default": true
+  },
+  "revision": 1
+}

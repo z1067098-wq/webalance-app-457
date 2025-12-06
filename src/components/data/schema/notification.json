@@ -1,0 +1,169 @@
+{
+  "id": "102019aed5d6f2071d1b86bcd9f74d7a4c8",
+  "version": "102019aed5ecd607c3cbfc03db1673f22cf",
+  "schema": {
+    "name": "notification",
+    "description": "Stores system notifications for users regarding various events like overspending, goals, etc.",
+    "fields": [
+      {
+        "name": "id",
+        "description": "Unique identifier for the notification.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Internal identifier."
+        }
+      },
+      {
+        "name": "data_creator",
+        "description": "id of the user who creates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        }
+      },
+      {
+        "name": "data_updater",
+        "description": "id of the user who updates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        }
+      },
+      {
+        "name": "create_time",
+        "description": "create time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "update_time",
+        "description": "update time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "user_id",
+        "description": "ID of the user receiving the notification.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Reference to user."
+        }
+      },
+      {
+        "name": "type",
+        "description": "Type of the notification event.",
+        "type": 100,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Notification classification."
+        },
+        "enumeration": [
+          {
+            "value": "Unspecified"
+          },
+          {
+            "number": 1,
+            "value": "Overspending"
+          },
+          {
+            "number": 2,
+            "value": "Goal"
+          },
+          {
+            "number": 3,
+            "value": "Bill"
+          },
+          {
+            "number": 4,
+            "value": "Insight"
+          }
+        ]
+      },
+      {
+        "name": "message",
+        "description": "Content of the notification message.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "Content may include personal financial details."
+        }
+      },
+      {
+        "name": "is_read",
+        "description": "Indicates whether the user has read the notification.",
+        "type": 3,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Status tracking."
+        }
+      }
+    ],
+    "indexes": [
+      {
+        "fields": [
+          "id"
+        ],
+        "unique": true,
+        "primary": true,
+        "order": false
+      },
+      {
+        "fields": [
+          "user_id"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_creator"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_updater"
+        ],
+        "order": false
+      }
+    ],
+    "relations": [
+      {
+        "referencing_fields": [
+          "user_id"
+        ],
+        "referenced_entity": {
+          "name": "user"
+        },
+        "referenced_fields": [
+          "id"
+        ],
+        "cascade": true
+      }
+    ]
+  },
+  "task": {
+    "id": "69328003c70740a92a92684f",
+    "root": "69328003c70740a92a92684f",
+    "project": "69328003c70740a92a92684e",
+    "user": "687183e0-c051-7000-5ebd-0c2a0e77084e"
+  },
+  "namespace": {
+    "id": "01987547fc6c72ecb453bd2736bd4ea0",
+    "tenant": 2,
+    "name": "global-1",
+    "default": true
+  },
+  "revision": 1
+}

@@ -1,0 +1,204 @@
+{
+  "id": "102019aed59fe0a721da649318707c1a088",
+  "version": "102019aed5ecd607c3cbfc03db1673f22cf",
+  "schema": {
+    "name": "bill",
+    "description": "Represents a recurring or one-time bill obligation associated with a couple.",
+    "fields": [
+      {
+        "name": "id",
+        "description": "Unique identifier for the bill.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Internal identifier."
+        }
+      },
+      {
+        "name": "data_creator",
+        "description": "id of the user who creates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        }
+      },
+      {
+        "name": "data_updater",
+        "description": "id of the user who updates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        }
+      },
+      {
+        "name": "create_time",
+        "description": "create time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "update_time",
+        "description": "update time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "couple_id",
+        "description": "ID of the couple this bill belongs to.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Data association."
+        }
+      },
+      {
+        "name": "name",
+        "description": "Name of the bill (e.g., Internet, Rent).",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "User content."
+        }
+      },
+      {
+        "name": "amount",
+        "description": "Amount due for the bill.",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "Financial data."
+        },
+        "taxonomy": {
+          "category": "Financial",
+          "subject": "Bill"
+        },
+        "numeric": "float"
+      },
+      {
+        "name": "category",
+        "description": "Category of the bill.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Classification."
+        }
+      },
+      {
+        "name": "due_day_of_month",
+        "description": "The day of the month the bill is due (1-31).",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Scheduling."
+        },
+        "taxonomy": {
+          "category": "Schedule",
+          "subject": "Bill"
+        },
+        "reference": {},
+        "numeric": "int"
+      },
+      {
+        "name": "assigned_to",
+        "description": "ID of the user assigned to pay this bill.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Task assignment."
+        },
+        "nullable": true
+      },
+      {
+        "name": "is_recurring",
+        "description": "Indicates if the bill is recurring.",
+        "type": 3,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Configuration."
+        }
+      }
+    ],
+    "indexes": [
+      {
+        "fields": [
+          "id"
+        ],
+        "unique": true,
+        "primary": true,
+        "order": false
+      },
+      {
+        "fields": [
+          "couple_id"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "assigned_to"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_creator"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_updater"
+        ],
+        "order": false
+      }
+    ],
+    "relations": [
+      {
+        "referencing_fields": [
+          "couple_id"
+        ],
+        "referenced_entity": {
+          "name": "couple"
+        },
+        "referenced_fields": [
+          "id"
+        ],
+        "cascade": true
+      },
+      {
+        "referencing_fields": [
+          "assigned_to"
+        ],
+        "referenced_entity": {
+          "name": "user"
+        },
+        "referenced_fields": [
+          "id"
+        ]
+      }
+    ]
+  },
+  "task": {
+    "id": "69328003c70740a92a92684f",
+    "root": "69328003c70740a92a92684f",
+    "project": "69328003c70740a92a92684e",
+    "user": "687183e0-c051-7000-5ebd-0c2a0e77084e"
+  },
+  "namespace": {
+    "id": "01987547fc6c72ecb453bd2736bd4ea0",
+    "tenant": 2,
+    "name": "global-1",
+    "default": true
+  },
+  "revision": 1
+}

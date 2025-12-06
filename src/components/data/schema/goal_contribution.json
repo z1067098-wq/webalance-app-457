@@ -1,0 +1,178 @@
+{
+  "id": "102019aed583b7871ed9002131db02fdadf",
+  "version": "102019aed5ecd607c3cbfc03db1673f22cf",
+  "schema": {
+    "name": "goal_contribution",
+    "description": "Records monetary contributions made by a user towards a specific financial goal.",
+    "fields": [
+      {
+        "name": "id",
+        "description": "Unique identifier for the goal contribution.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Internal identifier."
+        }
+      },
+      {
+        "name": "data_creator",
+        "description": "id of the user who creates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        }
+      },
+      {
+        "name": "data_updater",
+        "description": "id of the user who updates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        }
+      },
+      {
+        "name": "create_time",
+        "description": "create time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "update_time",
+        "description": "update time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "goal_id",
+        "description": "Reference to the goal being contributed to.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Association identifier."
+        }
+      },
+      {
+        "name": "user_id",
+        "description": "Reference to the user making the contribution.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Association identifier."
+        }
+      },
+      {
+        "name": "amount",
+        "description": "The monetary amount contributed.",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "Financial contribution data."
+        },
+        "taxonomy": {
+          "category": "Financial",
+          "subject": "Goal Contribution"
+        },
+        "numeric": "float"
+      },
+      {
+        "name": "contribution_date",
+        "description": "The date when the contribution was made.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Financial history."
+        },
+        "format": "timestamp"
+      }
+    ],
+    "indexes": [
+      {
+        "fields": [
+          "id"
+        ],
+        "unique": true,
+        "primary": true,
+        "order": false
+      },
+      {
+        "fields": [
+          "goal_id"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "user_id"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "contribution_date"
+        ],
+        "order": true
+      },
+      {
+        "fields": [
+          "data_creator"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_updater"
+        ],
+        "order": false
+      }
+    ],
+    "relations": [
+      {
+        "referencing_fields": [
+          "goal_id"
+        ],
+        "referenced_entity": {
+          "name": "goal"
+        },
+        "referenced_fields": [
+          "id"
+        ],
+        "cascade": true
+      },
+      {
+        "referencing_fields": [
+          "user_id"
+        ],
+        "referenced_entity": {
+          "name": "user"
+        },
+        "referenced_fields": [
+          "id"
+        ],
+        "cascade": true
+      }
+    ]
+  },
+  "task": {
+    "id": "69328003c70740a92a92684f",
+    "root": "69328003c70740a92a92684f",
+    "project": "69328003c70740a92a92684e",
+    "user": "687183e0-c051-7000-5ebd-0c2a0e77084e"
+  },
+  "namespace": {
+    "id": "01987547fc6c72ecb453bd2736bd4ea0",
+    "tenant": 2,
+    "name": "global-1",
+    "default": true
+  },
+  "revision": 1
+}

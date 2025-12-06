@@ -1,0 +1,193 @@
+{
+  "id": "102019aed56853e70d49b4e7a455cef5858",
+  "version": "102019aed5ecd607c3cbfc03db1673f22cf",
+  "schema": {
+    "name": "budget",
+    "description": "Represents a budget goal set by a couple for a specific category within a specific month and year.",
+    "fields": [
+      {
+        "name": "id",
+        "description": "Unique identifier for the budget entry.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Internal identifier."
+        }
+      },
+      {
+        "name": "data_creator",
+        "description": "id of the user who creates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        }
+      },
+      {
+        "name": "data_updater",
+        "description": "id of the user who updates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        }
+      },
+      {
+        "name": "create_time",
+        "description": "create time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "update_time",
+        "description": "update time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Audit trail."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "couple_id",
+        "description": "Identifier of the couple to whom this budget belongs.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Internal association."
+        }
+      },
+      {
+        "name": "category",
+        "description": "The category of expenses this budget applies to (e.g., Groceries, Rent).",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Budgeting categorization."
+        }
+      },
+      {
+        "name": "monthly_limit_amount",
+        "description": "The maximum amount allocated for this category for the month.",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "Financial data."
+        },
+        "taxonomy": {
+          "category": "Financial",
+          "subject": "Budget"
+        },
+        "numeric": "float"
+      },
+      {
+        "name": "month",
+        "description": "The month for which the budget is set (1-12).",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Time period."
+        },
+        "taxonomy": {
+          "category": "Time",
+          "subject": "Period"
+        },
+        "reference": {
+          "name": "12"
+        },
+        "numeric": "int"
+      },
+      {
+        "name": "year",
+        "description": "The year for which the budget is set.",
+        "type": 2,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Time period."
+        },
+        "taxonomy": {
+          "category": "Time",
+          "subject": "Period"
+        },
+        "numeric": "int"
+      }
+    ],
+    "indexes": [
+      {
+        "fields": [
+          "id"
+        ],
+        "unique": true,
+        "primary": true,
+        "order": false
+      },
+      {
+        "fields": [
+          "couple_id"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "couple_id",
+          "month",
+          "year"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "category",
+          "couple_id",
+          "month",
+          "year"
+        ],
+        "unique": true,
+        "order": false
+      },
+      {
+        "fields": [
+          "data_creator"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_updater"
+        ],
+        "order": false
+      }
+    ],
+    "relations": [
+      {
+        "referencing_fields": [
+          "couple_id"
+        ],
+        "referenced_entity": {
+          "name": "couple"
+        },
+        "referenced_fields": [
+          "id"
+        ],
+        "cascade": true
+      }
+    ]
+  },
+  "task": {
+    "id": "69328003c70740a92a92684f",
+    "root": "69328003c70740a92a92684f",
+    "project": "69328003c70740a92a92684e",
+    "user": "687183e0-c051-7000-5ebd-0c2a0e77084e"
+  },
+  "namespace": {
+    "id": "01987547fc6c72ecb453bd2736bd4ea0",
+    "tenant": 2,
+    "name": "global-1",
+    "default": true
+  },
+  "revision": 1
+}
